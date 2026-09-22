@@ -7,7 +7,7 @@
  * queries without touching the UI.
  */
 
-export type Status = "On Track" | "Needs Attention" | "At Risk";
+export type Status = "Всё в порядке" | "Требуется внимание" | "В группе риска";
 
 export type Skill = { id: string; name: string; subject: string; classMastery: number };
 
@@ -31,60 +31,60 @@ export type ClassRecord = {
   topic: string;
 };
 
-export const teacher = { id: "t1", name: "Dana", email: "dana@edupilot.ai", role: "teacher" };
+export const teacher = { id: "t1", name: "Дана", email: "dana@edupilot.ai", role: "teacher" };
 
 export const classRecord: ClassRecord = {
   id: "8a",
-  name: "Class 8A",
+  name: "Класс 8А",
   grade: 8,
-  subject: "Informatics",
-  teacher: "Dana",
-  unit: "Unit 3 — Control Flow",
-  topic: "Python Loops",
+  subject: "Информатика",
+  teacher: "Дана",
+  unit: "Раздел 3 — управление потоком выполнения",
+  topic: "Циклы Python",
 };
 
 export const skills: Skill[] = [
-  { id: "variables", name: "Variables", subject: "Informatics", classMastery: 87 },
-  { id: "conditions", name: "Conditions", subject: "Informatics", classMastery: 79 },
-  { id: "loops", name: "Loops", subject: "Informatics", classMastery: 61 },
-  { id: "range", name: "range()", subject: "Informatics", classMastery: 38 },
-  { id: "nested", name: "Nested Loops", subject: "Informatics", classMastery: 32 },
+  { id: "variables", name: "Переменные", subject: "Информатика", classMastery: 87 },
+  { id: "conditions", name: "Условия", subject: "Информатика", classMastery: 79 },
+  { id: "loops", name: "Циклы", subject: "Информатика", classMastery: 61 },
+  { id: "range", name: "range()", subject: "Информатика", classMastery: 38 },
+  { id: "nested", name: "Вложенные циклы", subject: "Информатика", classMastery: 32 },
 ];
 
 const roster: Array<[string, number]> = [
-  ["Aruzhan Serik", 78],
-  ["Dias Nurlan", 65],
-  ["Amina Kairat", 91],
-  ["Timur Bekzat", 54],
-  ["Aliya Zhanar", 84],
-  ["Nursultan Adil", 49],
-  ["Dana Yerlan", 76],
-  ["Miras Talgat", 60],
-  ["Aisha Marat", 89],
-  ["Bekzat Olzhas", 88],
-  ["Zhanel Askar", 87],
-  ["Yerkebulan Sain", 86],
-  ["Kamila Rustem", 85],
-  ["Alibek Daulet", 84],
-  ["Sabina Nurzhan", 90],
-  ["Arman Kuat", 92],
-  ["Madina Alisher", 86],
-  ["Ruslan Temir", 72],
-  ["Aigerim Sanzhar", 70],
-  ["Daniyar Ersin", 68],
-  ["Zarina Bauyrzhan", 58],
-  ["Olzhas Kanat", 55],
-  ["Aknur Zhandos", 62],
-  ["Islam Rakhat", 74],
-  ["Laura Beibit", 66],
+  ["Аружан Серик", 78],
+  ["Диас Нурлан", 65],
+  ["Амина Кайрат", 91],
+  ["Тимур Бекзат", 54],
+  ["Алия Жанар", 84],
+  ["Нурсултан Адиль", 49],
+  ["Дана Ерлан", 76],
+  ["Мирас Талгат", 60],
+  ["Айша Марат", 89],
+  ["Бекзат Олжас", 88],
+  ["Жанель Аскар", 87],
+  ["Еркебулан Саин", 86],
+  ["Камила Рустем", 85],
+  ["Алибек Даулет", 84],
+  ["Сабина Нуржан", 90],
+  ["Арман Куат", 92],
+  ["Мадина Алишер", 86],
+  ["Руслан Темир", 72],
+  ["Айгерим Санжар", 70],
+  ["Данияр Ерсин", 68],
+  ["Зарина Бауыржан", 58],
+  ["Олжас Канат", 55],
+  ["Акнур Жандос", 62],
+  ["Ислам Рахат", 74],
+  ["Лаура Бейбит", 66],
 ];
 
 const clamp = (n: number) => Math.max(5, Math.min(99, Math.round(n)));
 
 function statusOf(overall: number): Status {
-  if (overall >= 75) return "On Track";
-  if (overall >= 60) return "Needs Attention";
-  return "At Risk";
+  if (overall >= 75) return "Всё в порядке";
+  if (overall >= 60) return "Требуется внимание";
+  return "В группе риска";
 }
 
 export const students: Student[] = roster.map(([name, base], i) => {
@@ -123,104 +123,125 @@ export const insights: Insight[] = [
   {
     id: "i1",
     type: "gap",
-    title: "Learning gap detected",
-    description: `${studentsStrugglingWithRange.length} of ${students.length} students have difficulty understanding Python range().`,
+    title: "Обнаружен пробел в знаниях",
+    description: `${studentsStrugglingWithRange.length} из ${students.length} учеников испытывают трудности с пониманием range() в Python.`,
     confidence: 0.94,
   },
   {
     id: "i2",
     type: "progress",
-    title: "Loops mastery increased by 12% this week",
-    description: "Practice on basic for-loops is paying off across the class.",
+    title: "Освоение циклов выросло на 12% за неделю",
+    description: "Практика простых циклов for улучшает результаты всего класса.",
     confidence: 0.81,
   },
   {
     id: "i3",
     type: "misconception",
-    title: "Most common misconception",
-    description: "Students expect range(n) to include n and to start counting from 1.",
+    title: "Самое частое заблуждение",
+    description: "Ученики ожидают, что range(n) включает n и начинает отсчёт с 1.",
     confidence: 0.9,
   },
   {
     id: "i4",
     type: "attention",
-    title: "5 students may need additional practice",
-    description: "Nested loops mastery is below 35% for a third of the class.",
+    title: "5 ученикам может понадобиться дополнительная практика",
+    description: "У трети класса уровень освоения вложенных циклов ниже 35%.",
     confidence: 0.76,
   },
 ];
 
 export const recentAssessments = [
-  { id: "a1", title: "Quiz — Python Loops", topic: "Loops, range()", date: "Today", average: 68, completed: `${students.length}/${students.length}` },
-  { id: "a2", title: "Quiz — Conditions", topic: "if / elif / else", date: "Last week", average: 79, completed: `${students.length}/${students.length}` },
-  { id: "a3", title: "Practice — Variables", topic: "Variables & types", date: "2 weeks ago", average: 87, completed: `${students.length}/${students.length}` },
+  {
+    id: "a1",
+    title: "Тест — циклы Python",
+    topic: "Циклы, range()",
+    date: "Сегодня",
+    average: 68,
+    completed: `${students.length}/${students.length}`,
+  },
+  {
+    id: "a2",
+    title: "Тест — условия",
+    topic: "if / elif / else",
+    date: "На прошлой неделе",
+    average: 79,
+    completed: `${students.length}/${students.length}`,
+  },
+  {
+    id: "a3",
+    title: "Практика — переменные",
+    topic: "Переменные и типы",
+    date: "2 недели назад",
+    average: 87,
+    completed: `${students.length}/${students.length}`,
+  },
 ];
 
 export const assessmentResults = {
-  title: "Quiz — Python Loops",
+  title: "Тест — циклы Python",
   average: 68,
   completed: `${students.length}/${students.length}`,
   questions: [
-    { n: 1, text: "What is a for loop used for?", correctRate: 92, skill: "Loops" },
-    { n: 2, text: "How many times does `for i in range(4)` run?", correctRate: 71, skill: "Loops" },
-    { n: 3, text: "What does range(3) generate?", correctRate: 44, skill: "range()" },
-    { n: 4, text: "What prints from a nested loop 2×3?", correctRate: 48, skill: "Nested Loops" },
-    { n: 5, text: "Which loop sums 1..N?", correctRate: 63, skill: "Loops" },
+    { n: 1, text: "Для чего нужен цикл for?", correctRate: 92, skill: "Циклы" },
+    { n: 2, text: "Сколько раз выполнится `for i in range(4)`?", correctRate: 71, skill: "Циклы" },
+    { n: 3, text: "Какие значения создаёт range(3)?", correctRate: 44, skill: "range()" },
+    { n: 4, text: "Что выведет вложенный цикл 2×3?", correctRate: 48, skill: "Вложенные циклы" },
+    { n: 5, text: "Какой цикл вычисляет сумму чисел от 1 до N?", correctRate: 63, skill: "Циклы" },
   ],
 };
 
 export const quizQuestions = [
   {
     n: 1,
-    text: "What will the following code print?",
+    text: "Что выведет следующий код?",
     code: "for i in range(3):\n    print(i)",
     options: ["1 2 3", "0 1 2", "0 1 2 3"],
     correct: 1,
     concept: "range()",
-    feedback: "You may be assuming that range(3) starts at 1. In Python it starts at 0.",
+    feedback: "Возможно, вы думаете, что range(3) начинается с 1. В Python отсчёт начинается с 0.",
   },
   {
     n: 2,
-    text: "How many times does this loop run?",
+    text: "Сколько раз выполнится этот цикл?",
     code: "for i in range(5):\n    print('hi')",
     options: ["4", "5", "6"],
     correct: 1,
     concept: "range()",
-    feedback: "range(5) produces 5 values: 0, 1, 2, 3, 4.",
+    feedback: "range(5) создаёт 5 значений: 0, 1, 2, 3, 4.",
   },
   {
     n: 3,
-    text: "What does range(2, 5) generate?",
+    text: "Какие значения создаёт range(2, 5)?",
     code: "print(list(range(2, 5)))",
     options: ["2 3 4", "2 3 4 5", "1 2 3 4"],
     correct: 0,
     concept: "range()",
-    feedback: "The stop value is never included — range(2, 5) stops before 5.",
+    feedback: "Конечное значение не включается: range(2, 5) заканчивается перед 5.",
   },
   {
     n: 4,
-    text: "What is the last number printed?",
+    text: "Какое число будет выведено последним?",
     code: "for i in range(1, 6):\n    print(i)",
     options: ["5", "6", "4"],
     correct: 0,
     concept: "range()",
-    feedback: "Counting starts at 1 here, but still stops before 6.",
+    feedback: "Здесь отсчёт начинается с 1, но по-прежнему заканчивается перед 6.",
   },
   {
     n: 5,
-    text: "How many lines does this nested loop print?",
+    text: "Сколько строк выведет этот вложенный цикл?",
     code: "for i in range(2):\n    for j in range(3):\n        print(i, j)",
     options: ["5", "6", "9"],
     correct: 1,
-    concept: "Nested Loops",
-    feedback: "The inner loop runs fully for each outer step: 2 × 3 = 6.",
+    concept: "Вложенные циклы",
+    feedback: "Внутренний цикл выполняется полностью на каждом шаге внешнего: 2 × 3 = 6.",
   },
 ];
 
 export const studentMistakes = [
-  "Selected 1,2,3 for `range(3)` on the loops quiz",
-  "Wrote `for i in range(1, 5)` to print 5 numbers",
-  "Confused inner and outer loop order in a nested loop task",
+  "В тесте по циклам выбран ответ 1,2,3 для `range(3)`",
+  "Для вывода 5 чисел записано `for i in range(1, 5)`",
+  "В задании на вложенные циклы перепутан порядок внутреннего и внешнего циклов",
 ];
 
 export function getStudent(id: string) {

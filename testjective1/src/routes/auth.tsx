@@ -6,10 +6,13 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/auth")({
   head: () => ({
     meta: [
-      { title: "Sign in — EduPilot AI" },
-      { name: "description", content: "Sign in or create a teacher or student account on EduPilot AI." },
-      { property: "og:title", content: "Sign in — EduPilot AI" },
-      { property: "og:description", content: "Access your AI teaching agent and class analytics." },
+      { title: "Вход — EduPilot AI" },
+      {
+        name: "description",
+        content: "Войдите или создайте аккаунт учителя либо ученика в EduPilot AI.",
+      },
+      { property: "og:title", content: "Вход — EduPilot AI" },
+      { property: "og:description", content: "Откройте ИИ-помощника учителя и аналитику класса." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -43,7 +46,7 @@ function Auth() {
                   mode === m ? "bg-card shadow-card" : "text-muted-foreground",
                 )}
               >
-                {m === "login" ? "Log in" : "Sign up"}
+                {m === "login" ? "Войти" : "Регистрация"}
               </button>
             ))}
           </div>
@@ -55,17 +58,17 @@ function Auth() {
               navigate({ to: role === "teacher" ? "/app" : "/quiz" });
             }}
           >
-            {mode === "signup" ? <Field label="Full name" placeholder="Dana Yerlan" /> : null}
-            <Field label="Email" type="email" placeholder="dana@school.kz" />
-            <Field label="Password" type="password" placeholder="••••••••" />
+            {mode === "signup" ? <Field label="Имя и фамилия" placeholder="Дана Ерлан" /> : null}
+            <Field label="Электронная почта" type="email" placeholder="dana@school.kz" />
+            <Field label="Пароль" type="password" placeholder="••••••••" />
 
             <div>
-              <p className="mb-2 text-sm font-medium">I am a</p>
+              <p className="mb-2 text-sm font-medium">Моя роль</p>
               <div className="grid grid-cols-2 gap-2">
                 {(["teacher", "student"] as const).map((r) => (
                   <button
                     type="button"
-                    key={r}
+                    key={r === "teacher" ? "Учитель" : "Ученик"}
                     onClick={() => setRole(r)}
                     className={cn(
                       "rounded-xl border px-4 py-3 text-sm font-medium capitalize transition-colors",
@@ -74,32 +77,36 @@ function Auth() {
                         : "border-border bg-card text-muted-foreground hover:bg-secondary",
                     )}
                   >
-                    {r}
+                    {r === "teacher" ? "Учитель" : "Ученик"}
                   </button>
                 ))}
               </div>
             </div>
 
             <Button className="w-full" type="submit">
-              {mode === "login" ? "Log in" : "Create account"}
+              {mode === "login" ? "Войти" : "Создать аккаунт"}
             </Button>
           </form>
 
           <div className="my-5 flex items-center gap-3 text-xs text-muted-foreground">
-            <span className="h-px flex-1 bg-border" /> demo access
+            <span className="h-px flex-1 bg-border" /> демодоступ
             <span className="h-px flex-1 bg-border" />
           </div>
 
           <div className="space-y-2">
             <Button variant="secondary" className="w-full" onClick={() => navigate({ to: "/app" })}>
-              Continue as Demo Teacher
+              Демо для учителя
             </Button>
-            <Button variant="secondary" className="w-full" onClick={() => navigate({ to: "/quiz" })}>
-              Continue as Demo Student
+            <Button
+              variant="secondary"
+              className="w-full"
+              onClick={() => navigate({ to: "/quiz" })}
+            >
+              Демо для ученика
             </Button>
           </div>
           <p className="mt-3 text-center text-xs text-muted-foreground">
-            Demo teacher opens pre-filled Class 8A · Informatics
+            Демо для учителя: класс 8А с готовыми данными · Информатика
           </p>
         </div>
       </div>

@@ -9,10 +9,16 @@ import { recentAssessments } from "@/lib/data";
 export const Route = createFileRoute("/app/assessments/")({
   head: () => ({
     meta: [
-      { title: "Create Assessment — EduPilot AI" },
-      { name: "description", content: "Generate quizzes with multiple choice, code and short answer questions." },
-      { property: "og:title", content: "Create Assessment — EduPilot AI" },
-      { property: "og:description", content: "Build and publish an assessment in seconds, mapped to skills." },
+      { title: "Создать тест — EduPilot AI" },
+      {
+        name: "description",
+        content: "Создавайте тесты с выбором ответа, заданиями на код и краткими ответами.",
+      },
+      { property: "og:title", content: "Создать тест — EduPilot AI" },
+      {
+        property: "og:description",
+        content: "Создавайте и публикуйте тесты с привязкой вопросов к навыкам.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -20,7 +26,7 @@ export const Route = createFileRoute("/app/assessments/")({
   component: AssessmentGenerator,
 });
 
-const types = ["Multiple Choice", "Short Answer", "Code Question", "True / False"];
+const types = ["Выбор ответа", "Краткий ответ", "Задание на код", "Верно / неверно"];
 
 function AssessmentGenerator() {
   const agent = useAgentRun(ASSESSMENT_STEPS);
@@ -38,12 +44,12 @@ function AssessmentGenerator() {
   return (
     <div className="space-y-6">
       <SectionTitle
-        title="Create Assessment"
-        subtitle="Questions are mapped to skills so results feed straight into analytics."
+        title="Создать тест"
+        subtitle="Вопросы связаны с навыками, поэтому результаты сразу попадают в аналитику."
         action={
           <Link to="/app/assessments/results">
             <Button variant="secondary" size="sm">
-              View latest results
+              Последние результаты
             </Button>
           </Link>
         }
@@ -52,22 +58,22 @@ function AssessmentGenerator() {
       <Card>
         <div className="grid gap-4 md:grid-cols-4">
           <label className="block">
-            <span className="mb-1.5 block text-sm font-medium">Class</span>
+            <span className="mb-1.5 block text-sm font-medium">Класс</span>
             <select className="w-full rounded-xl border border-input bg-card px-3.5 py-2.5 text-sm">
-              <option>8A</option>
-              <option>8B</option>
-              <option>9A</option>
+              <option>8А</option>
+              <option>8Б</option>
+              <option>9А</option>
             </select>
           </label>
           <label className="block">
-            <span className="mb-1.5 block text-sm font-medium">Topic</span>
+            <span className="mb-1.5 block text-sm font-medium">Тема</span>
             <input
-              defaultValue="Python Loops"
+              defaultValue="Циклы Python"
               className="w-full rounded-xl border border-input bg-card px-3.5 py-2.5 text-sm outline-none focus:ring-2 focus:ring-ring/40"
             />
           </label>
           <label className="block">
-            <span className="mb-1.5 block text-sm font-medium">Number of questions</span>
+            <span className="mb-1.5 block text-sm font-medium">Количество вопросов</span>
             <input
               type="number"
               min={1}
@@ -78,26 +84,24 @@ function AssessmentGenerator() {
             />
           </label>
           <label className="block">
-            <span className="mb-1.5 block text-sm font-medium">Difficulty</span>
+            <span className="mb-1.5 block text-sm font-medium">Сложность</span>
             <select className="w-full rounded-xl border border-input bg-card px-3.5 py-2.5 text-sm">
-              <option>Mixed</option>
-              <option>Easy</option>
-              <option>Hard</option>
+              <option>Смешанная</option>
+              <option>Лёгкая</option>
+              <option>Сложная</option>
             </select>
           </label>
         </div>
 
         <div className="mt-4">
-          <p className="mb-2 text-sm font-medium">Question types</p>
+          <p className="mb-2 text-sm font-medium">Типы вопросов</p>
           <div className="flex flex-wrap gap-2">
             {types.map((t) => {
               const on = selected.includes(t);
               return (
                 <button
                   key={t}
-                  onClick={() =>
-                    setSelected((s) => (on ? s.filter((x) => x !== t) : [...s, t]))
-                  }
+                  onClick={() => setSelected((s) => (on ? s.filter((x) => x !== t) : [...s, t]))}
                   className={
                     on
                       ? "rounded-xl border border-primary bg-primary-soft px-3 py-1.5 text-xs font-medium text-accent-foreground"
@@ -113,26 +117,26 @@ function AssessmentGenerator() {
 
         <div className="mt-5">
           <Button disabled={agent.running} onClick={run}>
-            {agent.running ? "Generating..." : "Generate Assessment"}
+            {agent.running ? "Создание..." : "Создать тест"}
           </Button>
         </div>
       </Card>
 
       {agent.steps.length ? (
-        <AgentTimeline steps={agent.steps} title="AI agent writing your assessment" />
+        <AgentTimeline steps={agent.steps} title="ИИ-агент составляет тест" />
       ) : null}
 
       {questions && agent.done ? (
         <Card>
           <SectionTitle
-            title="Assessment — Python Loops"
-            subtitle={`${questions.length} questions`}
+            title="Тест — циклы Python"
+            subtitle={`Количество вопросов: ${questions.length}`}
             action={
               published ? (
-                <Badge tone="success">Published to Class 8A</Badge>
+                <Badge tone="success">Опубликовано для класса 8А</Badge>
               ) : (
                 <Button size="sm" onClick={() => setPublished(true)}>
-                  Publish Assessment
+                  Опубликовать тест
                 </Button>
               )
             }
@@ -159,21 +163,21 @@ function AssessmentGenerator() {
                   </ul>
                 ) : null}
                 <p className="mt-3 text-sm">
-                  <span className="font-medium text-success">Correct answer:</span> {q.answer}
+                  <span className="font-medium text-success">Правильный ответ:</span> {q.answer}
                 </p>
                 <div className="mt-3 flex flex-wrap gap-2">
                   <Button size="sm" variant="ghost">
-                    Edit
+                    Редактировать
                   </Button>
                   <Button
                     size="sm"
                     variant="ghost"
                     onClick={() => setQuestions((qs) => qs!.filter((x) => x.text !== q.text))}
                   >
-                    Delete
+                    Удалить
                   </Button>
                   <Button size="sm" variant="ghost" onClick={run}>
-                    Regenerate
+                    Создать заново
                   </Button>
                 </div>
               </div>
@@ -188,24 +192,30 @@ function AssessmentGenerator() {
                 setQuestions((qs) => [...qs!, extra[extra.length - 1]]);
               }}
             >
-              Add Question
+              Добавить вопрос
             </Button>
           </div>
         </Card>
       ) : null}
 
       <Card>
-        <SectionTitle title="Recent assessments" />
+        <SectionTitle title="Последние тесты" />
         <div className="divide-y divide-border">
           {recentAssessments.map((a) => (
-            <div key={a.id} className="flex flex-wrap items-center justify-between gap-2 py-3 text-sm">
+            <div
+              key={a.id}
+              className="flex flex-wrap items-center justify-between gap-2 py-3 text-sm"
+            >
               <span>
                 {a.title} <span className="text-muted-foreground">· {a.date}</span>
               </span>
               <div className="flex items-center gap-3">
-                <Badge tone={a.average >= 75 ? "success" : "warning"}>{a.average}% avg</Badge>
-                <Link to="/app/assessments/results" className="text-xs font-medium text-accent-foreground">
-                  Results →
+                <Badge tone={a.average >= 75 ? "success" : "warning"}>{a.average}% в среднем</Badge>
+                <Link
+                  to="/app/assessments/results"
+                  className="text-xs font-medium text-accent-foreground"
+                >
+                  Результаты →
                 </Link>
               </div>
             </div>

@@ -4,17 +4,17 @@ import { Button } from "@/components/ui";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "EduPilot AI — Your AI Teaching Agent" },
+      { title: "EduPilot AI — Ваш ИИ-помощник учителя" },
       {
         name: "description",
         content:
-          "EduPilot AI plans lessons, assesses students, detects learning gaps and adapts what you teach next.",
+          "EduPilot AI планирует уроки, оценивает знания учеников, выявляет пробелы и адаптирует дальнейшее обучение.",
       },
-      { property: "og:title", content: "EduPilot AI — Your AI Teaching Agent" },
+      { property: "og:title", content: "EduPilot AI — Ваш ИИ-помощник учителя" },
       {
         property: "og:description",
         content:
-          "An AI teaching agent that plans, assesses, understands and adapts for every class.",
+          "ИИ-помощник учителя, который планирует, оценивает, анализирует и адаптирует обучение для каждого класса.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -24,13 +24,16 @@ export const Route = createFileRoute("/")({
 });
 
 const features = [
-  { name: "Plan", text: "Generate lessons aligned with student needs." },
-  { name: "Assess", text: "Create and evaluate assessments." },
-  { name: "Understand", text: "Detect misconceptions and learning gaps." },
-  { name: "Adapt", text: "Automatically create personalized follow-up instruction." },
+  { name: "Планировать", text: "Создавайте уроки с учётом потребностей учеников." },
+  { name: "Оценивать", text: "Создавайте тесты и оценивайте результаты." },
+  { name: "Анализировать", text: "Выявляйте ошибочные представления и пробелы в знаниях." },
+  {
+    name: "Адаптировать",
+    text: "Автоматически готовьте индивидуальные материалы для дальнейшего обучения.",
+  },
 ];
 
-const cycle = ["PLAN", "TEACH", "ASSESS", "UNDERSTAND", "ADAPT"];
+const cycle = ["ПЛАНИРОВАНИЕ", "ОБУЧЕНИЕ", "ОЦЕНКА", "АНАЛИЗ", "АДАПТАЦИЯ"];
 
 function Landing() {
   return (
@@ -44,10 +47,10 @@ function Landing() {
         </div>
         <nav className="flex items-center gap-2">
           <Link to="/auth">
-            <Button variant="ghost">Sign In</Button>
+            <Button variant="ghost">Войти</Button>
           </Link>
           <Link to="/app">
-            <Button>Try Demo</Button>
+            <Button>Попробовать демо</Button>
           </Link>
         </nav>
       </header>
@@ -55,20 +58,21 @@ function Landing() {
       <main className="mx-auto max-w-6xl px-6 pb-24">
         <section className="animate-rise py-16 text-center">
           <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-muted-foreground">
-            AI Teaching Agent that plans, assesses, understands and adapts.
+            ИИ-помощник учителя: планирует, оценивает, анализирует и адаптирует.
           </span>
           <h1 className="mx-auto mt-6 max-w-3xl text-5xl font-semibold tracking-tight md:text-6xl">
-            Your AI Teaching Agent
+            Ваш ИИ-помощник учителя
           </h1>
           <p className="mx-auto mt-5 max-w-2xl text-lg text-muted-foreground">
-            Plan lessons, understand your students and automatically adapt what you teach next.
+            Планируйте уроки, понимайте трудности учеников и автоматически адаптируйте дальнейшее
+            обучение.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <Link to="/app">
-              <Button>Try Demo</Button>
+              <Button>Попробовать демо</Button>
             </Link>
             <Link to="/auth">
-              <Button variant="secondary">Sign In</Button>
+              <Button variant="secondary">Войти</Button>
             </Link>
           </div>
         </section>
@@ -91,7 +95,7 @@ function Landing() {
 
         <section className="mt-16 rounded-3xl border border-border bg-card p-8 shadow-card">
           <h2 className="text-center text-sm font-semibold uppercase tracking-widest text-muted-foreground">
-            The teaching cycle EduPilot runs for you
+            Учебный цикл с EduPilot
           </h2>
           <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
             {cycle.map((c, i) => (
@@ -99,9 +103,7 @@ function Landing() {
                 <span className="rounded-xl bg-primary-soft px-4 py-2 text-sm font-semibold text-accent-foreground">
                   {c}
                 </span>
-                <span className="text-muted-foreground">
-                  {i === cycle.length - 1 ? "↺" : "→"}
-                </span>
+                <span className="text-muted-foreground">{i === cycle.length - 1 ? "↺" : "→"}</span>
               </div>
             ))}
           </div>

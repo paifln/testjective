@@ -6,10 +6,17 @@ import { students } from "@/lib/data";
 export const Route = createFileRoute("/app/students/")({
   head: () => ({
     meta: [
-      { title: "Students — EduPilot AI" },
-      { name: "description", content: "Every student with overall mastery, key skills and risk status." },
-      { property: "og:title", content: "Students — EduPilot AI" },
-      { property: "og:description", content: "Spot at-risk students before the next lesson." },
+      { title: "Ученики — EduPilot AI" },
+      {
+        name: "description",
+        content:
+          "Список учеников с общим уровнем освоения, ключевыми навыками и статусом успеваемости.",
+      },
+      { property: "og:title", content: "Ученики — EduPilot AI" },
+      {
+        property: "og:description",
+        content: "Определите учеников, которым нужна помощь, до следующего урока.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -21,8 +28,8 @@ function StudentsPage() {
   return (
     <div className="space-y-6">
       <SectionTitle
-        title="Students"
-        subtitle={`${students.length} students · Class 8A · click a name to open the profile`}
+        title="Ученики"
+        subtitle={`${students.length} учеников · Класс 8А · нажмите на имя, чтобы открыть профиль`}
       />
       <StudentsTable />
     </div>

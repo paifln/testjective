@@ -8,14 +8,14 @@ export const Route = createFileRoute("/app")({
 });
 
 const nav = [
-  { to: "/app", label: "Dashboard", icon: "▦", exact: true },
-  { to: "/app/classes", label: "My Classes", icon: "▤" },
-  { to: "/app/lessons", label: "Lessons", icon: "✎" },
-  { to: "/app/students", label: "Students", icon: "☰" },
-  { to: "/app/assessments", label: "Assessments", icon: "✓" },
-  { to: "/app/analytics", label: "Analytics", icon: "◫" },
-  { to: "/app/agent", label: "AI Agent", icon: "✦" },
-  { to: "/app/settings", label: "Settings", icon: "⚙" },
+  { to: "/app", label: "Обзор", icon: "▦", exact: true },
+  { to: "/app/classes", label: "Мои классы", icon: "▤" },
+  { to: "/app/lessons", label: "Уроки", icon: "✎" },
+  { to: "/app/students", label: "Ученики", icon: "☰" },
+  { to: "/app/assessments", label: "Тесты", icon: "✓" },
+  { to: "/app/analytics", label: "Аналитика", icon: "◫" },
+  { to: "/app/agent", label: "ИИ-агент", icon: "✦" },
+  { to: "/app/settings", label: "Настройки", icon: "⚙" },
 ] as const;
 
 function AppLayout() {
@@ -61,9 +61,9 @@ function AppLayout() {
 
         <div className="absolute inset-x-4 bottom-6 rounded-2xl border border-border bg-card p-4">
           <p className="text-sm font-medium">{teacher.name}</p>
-          <p className="text-xs text-muted-foreground">Teacher · Informatics</p>
+          <p className="text-xs text-muted-foreground">Учитель · Информатика</p>
           <Link to="/quiz" className="mt-3 block text-xs font-medium text-accent-foreground">
-            Open student view →
+            Открыть кабинет ученика →
           </Link>
         </div>
       </aside>

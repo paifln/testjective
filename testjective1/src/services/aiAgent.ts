@@ -25,34 +25,34 @@ export type StepStatus = "waiting" | "running" | "done";
 export type AgentStep = { label: string; status: StepStatus };
 
 export const LESSON_STEPS = [
-  "Analyzing class performance",
-  "Detecting knowledge gaps",
-  "Reading curriculum objectives",
-  "Creating lesson structure",
-  "Generating differentiated activities",
-  "Creating exit quiz",
+  "Анализ успеваемости класса",
+  "Выявление пробелов в знаниях",
+  "Изучение целей учебной программы",
+  "Создание структуры урока",
+  "Создание заданий разного уровня",
+  "Создание итогового теста",
 ];
 
 export const INTERVENTION_STEPS = [
-  "Analyzing misconception",
-  "Creating explanation",
-  "Creating practice exercises",
-  "Creating mini quiz",
+  "Анализ ошибочного представления",
+  "Подготовка объяснения",
+  "Создание практических упражнений",
+  "Создание мини-теста",
 ];
 
 export const ASSESSMENT_STEPS = [
-  "Reading topic and objectives",
-  "Selecting question types",
-  "Writing questions",
-  "Attaching skills and answer keys",
+  "Изучение темы и целей",
+  "Выбор типов вопросов",
+  "Составление вопросов",
+  "Привязка навыков и правильных ответов",
 ];
 
 export const ANALYSIS_STEPS = [
-  "Retrieving class data",
-  "Retrieving student performance",
-  "Detecting learning gaps",
-  "Checking curriculum requirements",
-  "Deciding next teaching action",
+  "Получение данных класса",
+  "Получение результатов учеников",
+  "Выявление пробелов в знаниях",
+  "Проверка требований учебной программы",
+  "Выбор следующего шага обучения",
 ];
 
 export function initialSteps(labels: string[]): AgentStep[] {
@@ -84,9 +84,9 @@ export const getSkillMastery = async () => skills;
 export const getCurriculum = async () => ({
   unit: classRecord.unit,
   objectives: [
-    "Use for loops to repeat actions a fixed number of times",
-    "Explain how range(start, stop) produces values",
-    "Combine loops with conditions to solve problems",
+    "Использовать циклы for для повторения действий заданное число раз",
+    "Объяснять, как range(start, stop) создаёт значения",
+    "Сочетать циклы с условиями для решения задач",
   ],
 });
 
@@ -97,7 +97,7 @@ export const analyzeLearningGaps = async () => [
     affected: studentsStrugglingWithRange.length,
     total: students.length,
   },
-  { skill: "Nested Loops", mastery: 32, affected: 12, total: students.length },
+  { skill: "Вложенные циклы", mastery: 32, affected: 12, total: students.length },
 ];
 
 /* --------------------------------- outputs -------------------------------- */
@@ -110,19 +110,45 @@ export type Lesson = {
   structure: { time: string; label: string; detail: string }[];
 };
 
-export const generateLessonPlan = async (topic = "Python For Loops"): Promise<Lesson> => ({
-  title: `${topic} — Understanding range() Before Nesting`,
+export const generateLessonPlan = async (topic = "Циклы for в Python"): Promise<Lesson> => ({
+  title: `${topic} — Изучаем range() перед вложенными циклами`,
   objective:
-    "Students can predict the exact values produced by range(start, stop) and use a for loop to repeat an action a known number of times.",
-  duration: "45 minutes",
-  materials: ["Projector / live coding editor", "Printed worksheet", "Exit quiz (5 questions)"],
+    "Ученики умеют точно определять значения range(start, stop) и использовать цикл for для повторения действия заданное число раз.",
+  duration: "45 минут",
+  materials: [
+    "Проектор / редактор для демонстрации кода",
+    "Распечатанный рабочий лист",
+    "Итоговый тест (5 вопросов)",
+  ],
   structure: [
-    { time: "0–5 min", label: "Warm-up", detail: "Quick poll: what does range(5) print? Reveal the class split from yesterday's quiz." },
-    { time: "5–12 min", label: "Concept explanation", detail: "Number-line visual of range(): starts at 0, stops before the stop value." },
-    { time: "12–20 min", label: "Teacher live coding", detail: "Trace three loops together, printing each iteration variable." },
-    { time: "20–32 min", label: "Student practice", detail: "Differentiated worksheet — beginner / intermediate / advanced tracks." },
-    { time: "32–40 min", label: "Challenge exercise", detail: "Sum of numbers 1..N with an accumulator variable." },
-    { time: "40–45 min", label: "Exit quiz", detail: "5 questions targeting range() boundaries." },
+    {
+      time: "0–5 мин",
+      label: "Разминка",
+      detail:
+        "Быстрый опрос: какие значения создаёт range(5)? Покажите распределение ответов во вчерашнем тесте.",
+    },
+    {
+      time: "5–12 мин",
+      label: "Объяснение понятия",
+      detail:
+        "Покажите range() на числовой прямой: начинается с 0, заканчивается перед конечным значением.",
+    },
+    {
+      time: "12–20 мин",
+      label: "Демонстрация кода учителем",
+      detail: "Разберите вместе три цикла, выводя значение переменной на каждом шаге.",
+    },
+    {
+      time: "20–32 мин",
+      label: "Практика учеников",
+      detail: "Рабочий лист с заданиями начального, среднего и продвинутого уровней.",
+    },
+    {
+      time: "32–40 мин",
+      label: "Задание повышенной сложности",
+      detail: "Сумма чисел от 1 до N с использованием переменной-накопителя.",
+    },
+    { time: "40–45 мин", label: "Итоговый тест", detail: "5 вопросов о границах range()." },
   ],
 });
 
@@ -133,25 +159,47 @@ export const generateDifferentiatedExercises = async (
 ): Promise<Exercises> => {
   const pools: Record<keyof Exercises, string[][]> = {
     beginner: [
-      ["What numbers will this code print?\n\nfor i in range(5):\n    print(i)", "Fill the gap: print numbers 0 to 3 using range(__)."],
-      ["What numbers will this code print?\n\nfor i in range(4):\n    print(i)", "True or false: range(3) includes 3."],
+      [
+        "Какие числа выведет этот код?\n\nfor i in range(5):\n    print(i)",
+        "Заполните пропуск: выведите числа от 0 до 3 с помощью range(__).",
+      ],
+      [
+        "Какие числа выведет этот код?\n\nfor i in range(4):\n    print(i)",
+        "Верно или неверно: range(3) включает 3.",
+      ],
     ],
     intermediate: [
-      ["Write a program that prints numbers from 1 to 10 using a for loop.", "Print only the even numbers from 0 to 20."],
-      ["Print the numbers from 10 down to 1 using range().", "Print every third number between 0 and 30."],
+      [
+        "Напишите программу, которая выводит числа от 1 до 10 с помощью цикла for.",
+        "Выведите только чётные числа от 0 до 20.",
+      ],
+      [
+        "Выведите числа от 10 до 1 в обратном порядке с помощью range().",
+        "Выведите каждое третье число от 0 до 30.",
+      ],
     ],
     advanced: [
-      ["Write a program that calculates the sum of numbers from 1 to N using a for loop.", "Print a 3×3 multiplication grid using nested loops."],
-      ["Compute the factorial of N with a for loop.", "Print a right-angled triangle of stars of height N."],
+      [
+        "Напишите программу, которая вычисляет сумму чисел от 1 до N с помощью цикла for.",
+        "Выведите таблицу умножения 3×3 с помощью вложенных циклов.",
+      ],
+      [
+        "Вычислите факториал N с помощью цикла for.",
+        "Выведите прямоугольный треугольник из звёздочек высотой N.",
+      ],
     ],
   };
   const pick = (k: keyof Exercises) => pools[k][level === k ? 1 : 0];
-  return { beginner: pick("beginner"), intermediate: pick("intermediate"), advanced: pick("advanced") };
+  return {
+    beginner: pick("beginner"),
+    intermediate: pick("intermediate"),
+    advanced: pick("advanced"),
+  };
 };
 
 export type QuizQuestion = {
   text: string;
-  type: "Multiple Choice" | "Short Answer" | "Code Question" | "True / False";
+  type: "Выбор ответа" | "Краткий ответ" | "Задание на код" | "Верно / неверно";
   options?: string[];
   answer: string;
   skill: string;
@@ -159,26 +207,59 @@ export type QuizQuestion = {
 
 export const generateAssessment = async (count = 5): Promise<QuizQuestion[]> => {
   const bank: QuizQuestion[] = [
-    { text: "What does range(3) generate?", type: "Multiple Choice", options: ["1,2,3", "0,1,2", "0,1,2,3"], answer: "B — 0,1,2", skill: "range()" },
-    { text: "How many times does `for i in range(6)` repeat?", type: "Multiple Choice", options: ["5", "6", "7"], answer: "B — 6", skill: "Loops" },
-    { text: "range(2, 6) includes the number 6.", type: "True / False", answer: "False", skill: "range()" },
-    { text: "Write a loop that prints numbers 1 to 5.", type: "Code Question", answer: "for i in range(1, 6): print(i)", skill: "Loops" },
-    { text: "In your own words, where does range() start counting?", type: "Short Answer", answer: "At 0 unless a start value is given.", skill: "range()" },
-    { text: "How many lines does a 2×3 nested loop print?", type: "Multiple Choice", options: ["5", "6", "9"], answer: "B — 6", skill: "Nested Loops" },
+    {
+      text: "Какие значения создаёт range(3)?",
+      type: "Выбор ответа",
+      options: ["1,2,3", "0,1,2", "0,1,2,3"],
+      answer: "B — 0,1,2",
+      skill: "range()",
+    },
+    {
+      text: "Сколько раз повторится `for i in range(6)`?",
+      type: "Выбор ответа",
+      options: ["5", "6", "7"],
+      answer: "B — 6",
+      skill: "Циклы",
+    },
+    {
+      text: "range(2, 6) включает число 6.",
+      type: "Верно / неверно",
+      answer: "Неверно",
+      skill: "range()",
+    },
+    {
+      text: "Напишите цикл, который выводит числа от 1 до 5.",
+      type: "Задание на код",
+      answer: "for i in range(1, 6): print(i)",
+      skill: "Циклы",
+    },
+    {
+      text: "Объясните своими словами, с какого значения range() начинает отсчёт.",
+      type: "Краткий ответ",
+      answer: "С 0, если начальное значение не задано.",
+      skill: "range()",
+    },
+    {
+      text: "Сколько строк выведет вложенный цикл 2×3?",
+      type: "Выбор ответа",
+      options: ["5", "6", "9"],
+      answer: "B — 6",
+      skill: "Вложенные циклы",
+    },
   ];
   return bank.slice(0, count);
 };
 
 export const gradeStudentAnswer = async (correct: boolean, feedback: string) => ({
   correct,
-  title: correct ? "Correct!" : "Not quite.",
-  explanation: correct ? "You traced every iteration properly." : feedback,
+  title: correct ? "Верно!" : "Не совсем.",
+  explanation: correct ? "Вы правильно разобрали все шаги цикла." : feedback,
 });
 
 export const detectMisconception = async () => ({
   concept: "range()",
-  statement: "Students believe range(n) starts from 1 and includes n.",
-  evidence: `${studentsStrugglingWithRange.length} students selected 1,2,3 instead of 0,1,2 on question 3.`,
+  statement: "Ученики считают, что range(n) начинается с 1 и включает n.",
+  evidence: `${studentsStrugglingWithRange.length} учеников выбрали 1,2,3 вместо 0,1,2 в вопросе 3.`,
   confidence: 0.94,
 });
 
@@ -189,32 +270,38 @@ export const updateStudentMastery = async (studentId: string, skillId: string, d
 });
 
 export const generateStudentLearningPlan = async (name: string) => ({
-  title: `Personal learning plan — ${name}`,
+  title: `Индивидуальный учебный план — ${name}`,
   steps: [
-    "5-minute visual recap of range() on a number line",
-    "3 guided tracing exercises with printed output",
-    "2 short coding tasks using range(start, stop)",
-    "Mini quiz to confirm the boundary rule",
+    "5 минут повторения range() на числовой прямой",
+    "3 упражнения на пошаговый разбор кода с выводом результата и подсказками",
+    "2 небольших задания на код с использованием range(start, stop)",
+    "Мини-тест для закрепления правила границ",
   ],
 });
 
 export const generateClassInsight = async () => insights[0];
 
 export const generateInterventionLesson = async () => ({
-  title: "Intervention Lesson — range() boundaries",
-  goal: "Correct misunderstanding of Python range().",
-  duration: "10 minutes",
+  title: "Урок для устранения пробелов — границы range()",
+  goal: "Устранить ошибочное понимание range() в Python.",
+  duration: "10 минут",
   content: [
-    { label: "Visual explanation", detail: "Number line from 0, highlight that the stop value is excluded." },
-    { label: "Teacher example", detail: "Trace range(5) and range(1, 5) side by side on the board." },
-    { label: "Guided exercise", detail: "Class predicts output of four range() calls before running them." },
-    { label: "Student practice", detail: "Three short tasks with immediate answer reveal." },
-    { label: "Mini quiz", detail: "Two questions on start and stop boundaries." },
+    {
+      label: "Наглядное объяснение",
+      detail: "Покажите числовую прямую от 0 и подчеркните, что конечное значение не включается.",
+    },
+    { label: "Пример учителя", detail: "Разберите range(5) и range(1, 5) рядом на доске." },
+    {
+      label: "Упражнение с подсказками",
+      detail: "Класс определяет результат четырёх вызовов range() до запуска кода.",
+    },
+    { label: "Практика учеников", detail: "Три коротких задания с немедленным показом ответа." },
+    { label: "Мини-тест", detail: "Два вопроса о начальной и конечной границах." },
   ],
 });
 
 export const generateNextLessonRecommendation = async () =>
-  "Review range() before introducing nested loops.";
+  "Повторите range() перед изучением вложенных циклов.";
 
 /* --------------------- high-level agent entry points ---------------------- */
 
@@ -224,4 +311,4 @@ export const generateQuiz = generateAssessment;
 export const gradeAnswer = gradeStudentAnswer;
 export const generateIntervention = generateInterventionLesson;
 
-export const agentSummary = `I analyzed the most recent assessment. ${studentsStrugglingWithRange.length} of ${students.length} students struggle with range(). I recommend reviewing range() before introducing nested loops.`;
+export const agentSummary = `Я проанализировал последний тест. ${studentsStrugglingWithRange.length} из ${students.length} учеников испытывают трудности с range(). Рекомендую повторить range() перед изучением вложенных циклов.`;

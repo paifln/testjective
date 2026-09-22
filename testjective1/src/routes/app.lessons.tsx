@@ -14,10 +14,16 @@ import {
 export const Route = createFileRoute("/app/lessons")({
   head: () => ({
     meta: [
-      { title: "Create Lesson — EduPilot AI" },
-      { name: "description", content: "Generate a full lesson plan with differentiated exercises and an exit quiz." },
-      { property: "og:title", content: "Create Lesson — EduPilot AI" },
-      { property: "og:description", content: "An AI agent builds the lesson from your class's real performance data." },
+      { title: "Создать урок — EduPilot AI" },
+      {
+        name: "description",
+        content: "Создавайте полный план урока с заданиями разного уровня и итоговым тестом.",
+      },
+      { property: "og:title", content: "Создать урок — EduPilot AI" },
+      {
+        property: "og:description",
+        content: "ИИ-агент составляет урок на основе данных об успеваемости класса.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -29,7 +35,7 @@ function LessonGenerator() {
   const agent = useAgentRun(LESSON_STEPS);
   const [lesson, setLesson] = useState<Lesson | null>(null);
   const [exercises, setExercises] = useState<Exercises | null>(null);
-  const [topic, setTopic] = useState("Python For Loops");
+  const [topic, setTopic] = useState("Циклы for в Python");
   const [editing, setEditing] = useState(false);
 
   const run = () =>
@@ -44,34 +50,37 @@ function LessonGenerator() {
   return (
     <div className="space-y-6">
       <SectionTitle
-        title="Create Lesson"
-        subtitle="The agent uses your class mastery data to shape every section."
+        title="Создать урок"
+        subtitle="Агент учитывает уровень освоения навыков в классе при подготовке каждого раздела."
       />
 
       <Card>
         <div className="grid gap-4 md:grid-cols-3">
-          <Field label="Class" defaultValue="8A" />
-          <Field label="Grade" defaultValue="8" />
-          <Field label="Subject" defaultValue="Informatics" />
-          <Field label="Topic" value={topic} onChange={setTopic} />
-          <Field label="Lesson duration" defaultValue="45 minutes" />
-          <Select label="Difficulty" options={["Mixed (differentiated)", "Beginner", "Advanced"]} />
+          <Field label="Класс" defaultValue="8А" />
+          <Field label="Параллель" defaultValue="8" />
+          <Field label="Предмет" defaultValue="Информатика" />
+          <Field label="Тема" value={topic} onChange={setTopic} />
+          <Field label="Продолжительность урока" defaultValue="45 минут" />
+          <Select
+            label="Сложность"
+            options={["Смешанный (разные уровни)", "Начальный", "Продвинутый"]}
+          />
           <div className="md:col-span-3">
             <Field
-              label="Learning objective"
-              defaultValue="Students can predict what range(start, stop) produces."
+              label="Учебная цель"
+              defaultValue="Ученики умеют определять значения, которые создаёт range(start, stop)."
             />
           </div>
         </div>
         <div className="mt-5">
           <Button disabled={agent.running} onClick={run}>
-            {agent.running ? "Generating..." : "Generate Lesson with AI"}
+            {agent.running ? "Создание..." : "Создать урок с ИИ"}
           </Button>
         </div>
       </Card>
 
       {agent.steps.length ? (
-        <AgentTimeline steps={agent.steps} title="AI agent generating your lesson" />
+        <AgentTimeline steps={agent.steps} title="ИИ-агент готовит урок" />
       ) : null}
 
       {agent.running && !lesson ? (
@@ -87,7 +96,7 @@ function LessonGenerator() {
           <Card>
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div>
-                <Badge tone="brand">Lesson prepared</Badge>
+                <Badge tone="brand">Урок готов</Badge>
                 <h2 className="mt-3 text-2xl font-semibold tracking-tight">{lesson.title}</h2>
                 <p className="mt-2 max-w-2xl text-sm text-muted-foreground">{lesson.objective}</p>
               </div>
@@ -96,7 +105,7 @@ function LessonGenerator() {
 
             <div className="mt-6 grid gap-6 lg:grid-cols-[1fr_1.4fr]">
               <div>
-                <p className="mb-2 text-sm font-semibold">Required materials</p>
+                <p className="mb-2 text-sm font-semibold">Необходимые материалы</p>
                 <ul className="space-y-1.5 text-sm text-muted-foreground">
                   {lesson.materials.map((m) => (
                     <li key={m}>• {m}</li>
@@ -104,7 +113,7 @@ function LessonGenerator() {
                 </ul>
               </div>
               <div>
-                <p className="mb-2 text-sm font-semibold">Lesson structure</p>
+                <p className="mb-2 text-sm font-semibold">Структура урока</p>
                 <ol className="relative space-y-3 border-l border-border pl-5">
                   {lesson.structure.map((s) => (
                     <li key={s.time}>
@@ -121,36 +130,30 @@ function LessonGenerator() {
 
             <div className="mt-6 flex flex-wrap gap-2">
               <Button size="sm" variant="secondary" onClick={() => setEditing((v) => !v)}>
-                {editing ? "Done editing" : "Edit Lesson"}
+                {editing ? "Завершить редактирование" : "Редактировать урок"}
               </Button>
               <Button size="sm" variant="secondary" disabled={agent.running} onClick={run}>
-                Regenerate
+                Создать заново
               </Button>
-              <Button
-                size="sm"
-                variant="secondary"
-                onClick={() => regenLevel("intermediate")}
-              >
-                Generate Exercises
+              <Button size="sm" variant="secondary" onClick={() => regenLevel("intermediate")}>
+                Создать упражнения
               </Button>
               <Link to="/app/assessments">
                 <Button size="sm" variant="secondary">
-                  Generate Quiz
+                  Создать тест
                 </Button>
               </Link>
-              <Button
-                size="sm"
-                variant="secondary"
-                onClick={() => window.print()}
-              >
-                Export
+              <Button size="sm" variant="secondary" onClick={() => window.print()}>
+                Экспорт
               </Button>
             </div>
 
             {editing ? (
               <textarea
                 className="mt-4 h-40 w-full rounded-xl border border-input bg-card p-3 text-sm outline-none focus:ring-2 focus:ring-ring/40"
-                defaultValue={lesson.structure.map((s) => `${s.time} ${s.label}: ${s.detail}`).join("\n")}
+                defaultValue={lesson.structure
+                  .map((s) => `${s.time} ${s.label}: ${s.detail}`)
+                  .join("\n")}
               />
             ) : null}
           </Card>
@@ -160,9 +163,15 @@ function LessonGenerator() {
               {(["beginner", "intermediate", "advanced"] as const).map((level) => (
                 <Card key={level}>
                   <div className="flex items-center justify-between">
-                    <p className="font-semibold capitalize">{level}</p>
+                    <p className="font-semibold capitalize">
+                      {
+                        { beginner: "Начальный", intermediate: "Средний", advanced: "Продвинутый" }[
+                          level
+                        ]
+                      }
+                    </p>
                     <Button size="sm" variant="ghost" onClick={() => regenLevel(level)}>
-                      Regenerate
+                      Создать заново
                     </Button>
                   </div>
                   <div className="mt-4 space-y-3">
@@ -171,7 +180,11 @@ function LessonGenerator() {
                       return (
                         <div key={task} className="rounded-xl bg-secondary/60 p-3">
                           <p className="text-sm">{text}</p>
-                          {codeLines.length ? <div className="mt-2"><CodeBlock code={codeLines.join("\n\n")} /></div> : null}
+                          {codeLines.length ? (
+                            <div className="mt-2">
+                              <CodeBlock code={codeLines.join("\n\n")} />
+                            </div>
+                          ) : null}
                         </div>
                       );
                     })}

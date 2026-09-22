@@ -22,7 +22,8 @@ export function AgentTimeline({ steps, title }: { steps: AgentStep[]; title?: st
               className={cn(
                 "absolute -left-[31px] flex h-5 w-5 items-center justify-center rounded-full border text-[10px] font-bold",
                 step.status === "done" && "border-success bg-success text-white",
-                step.status === "running" && "border-primary bg-primary-soft text-accent-foreground",
+                step.status === "running" &&
+                  "border-primary bg-primary-soft text-accent-foreground",
                 step.status === "waiting" && "border-border bg-card text-muted-foreground",
               )}
             >
@@ -45,7 +46,11 @@ export function AgentTimeline({ steps, title }: { steps: AgentStep[]; title?: st
                 step.status === "waiting" && "text-muted-foreground",
               )}
             >
-              {step.status === "done" ? "Completed" : step.status === "running" ? "Loading..." : "Waiting"}
+              {step.status === "done"
+                ? "Завершено"
+                : step.status === "running"
+                  ? "Загрузка..."
+                  : "Ожидание"}
             </p>
           </li>
         ))}

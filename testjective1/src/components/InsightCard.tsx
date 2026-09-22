@@ -9,13 +9,7 @@ const icons: Record<Insight["type"], string> = {
   attention: "◑",
 };
 
-export function InsightCard({
-  insight,
-  actions,
-}: {
-  insight: Insight;
-  actions?: ReactNode;
-}) {
+export function InsightCard({ insight, actions }: { insight: Insight; actions?: ReactNode }) {
   return (
     <div className="surface-grad animate-rise rounded-2xl border border-border bg-card p-5 shadow-card">
       <div className="flex items-start gap-3">
@@ -34,7 +28,7 @@ export function InsightCard({
           <div className="flex flex-wrap items-center gap-2">
             <p className="font-semibold">{insight.title}</p>
             <span className="rounded-full bg-primary-soft px-2 py-0.5 text-[11px] font-medium text-accent-foreground">
-              AI Insight · {Math.round(insight.confidence * 100)}% confidence
+              Вывод ИИ · {Math.round(insight.confidence * 100)}% уверенности
             </span>
           </div>
           <p className="mt-1.5 text-sm text-muted-foreground">{insight.description}</p>

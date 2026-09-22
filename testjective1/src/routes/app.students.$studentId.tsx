@@ -10,10 +10,16 @@ import { getStudent, recentAssessments, skills, studentMistakes } from "@/lib/da
 export const Route = createFileRoute("/app/students/$studentId")({
   head: () => ({
     meta: [
-      { title: "Student profile — EduPilot AI" },
-      { name: "description", content: "Skill mastery, recent mistakes and AI learning recommendations for a student." },
-      { property: "og:title", content: "Student profile — EduPilot AI" },
-      { property: "og:description", content: "Understand exactly where a student is stuck and what to do next." },
+      { title: "Профиль ученика — EduPilot AI" },
+      {
+        name: "description",
+        content: "Освоение навыков, последние ошибки и рекомендации ИИ для ученика.",
+      },
+      { property: "og:title", content: "Профиль ученика — EduPilot AI" },
+      {
+        property: "og:description",
+        content: "Узнайте, что вызывает трудности у ученика и как ему помочь.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -29,7 +35,7 @@ function StudentProfile() {
   const [showHistory, setShowHistory] = useState(false);
 
   if (!student) {
-    return <EmptyState title="Student not found" hint="Pick a student from the class roster." />;
+    return <EmptyState title="Ученик не найден" hint="Выберите ученика из списка класса." />;
   }
 
   const firstName = student.name.split(" ")[0];
@@ -39,16 +45,16 @@ function StudentProfile() {
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
           <Link to="/app/students" className="text-sm text-muted-foreground hover:text-foreground">
-            ← All students
+            ← Все ученики
           </Link>
           <h1 className="mt-2 text-3xl font-semibold tracking-tight">{student.name}</h1>
-          <p className="mt-1 text-muted-foreground">Class 8A · Informatics</p>
+          <p className="mt-1 text-muted-foreground">Класс 8А · Информатика</p>
         </div>
         <Badge
           tone={
-            student.status === "On Track"
+            student.status === "Всё в порядке"
               ? "success"
-              : student.status === "Needs Attention"
+              : student.status === "Требуется внимание"
                 ? "warning"
                 : "danger"
           }
@@ -58,14 +64,18 @@ function StudentProfile() {
       </div>
 
       <div className="grid gap-4 sm:grid-cols-3">
-        <Stat label="Overall Mastery" value={`${student.overall}%`} />
-        <Stat label="Last Score" value={`${student.lastScore}%`} />
-        <Stat label="Weakest Skill" value={`range() ${student.skills.range}%`} tone="warning" />
+        <Stat label="Общее освоение" value={`${student.overall}%`} />
+        <Stat label="Последний результат" value={`${student.lastScore}%`} />
+        <Stat
+          label="Навык с наименьшим освоением"
+          value={`range() ${student.skills.range}%`}
+          tone="warning"
+        />
       </div>
 
       <div className="grid gap-6 lg:grid-cols-[1.1fr_1fr]">
         <Card>
-          <SectionTitle title="Skill mastery" />
+          <SectionTitle title="Освоение навыков" />
           <div className="space-y-3.5">
             {skills.map((s) => (
               <MasteryBar key={s.id} label={s.name} value={student.skills[s.id]} />
@@ -75,7 +85,7 @@ function StudentProfile() {
 
         <div className="space-y-4">
           <Card>
-            <SectionTitle title="Recent mistakes" />
+            <SectionTitle title="Последние ошибки" />
             <ul className="space-y-2 text-sm text-muted-foreground">
               {studentMistakes.map((m) => (
                 <li key={m} className="flex gap-2">
@@ -90,8 +100,8 @@ function StudentProfile() {
             insight={{
               id: "rec",
               type: "misconception",
-              title: "Common misconception & recommendation",
-              description: `${firstName} appears to misunderstand that Python range(5) starts from 0 and does not include 5. Re-teach the boundary rule with a number line before nested loops.`,
+              title: "Типичная ошибка и рекомендация",
+              description: `${firstName} пока не понимает, что range(5) в Python начинается с 0 и не включает 5. Перед изучением вложенных циклов повторите правило границ на числовой прямой.`,
               confidence: 0.91,
             }}
           />
@@ -100,7 +110,7 @@ function StudentProfile() {
 
       <div className="flex flex-wrap gap-2">
         <Button disabled={agent.running} onClick={() => agent.start()}>
-          {agent.running ? "Generating..." : "Generate Practice"}
+          {agent.running ? "Создание..." : "Создать практику"}
         </Button>
         <Button
           variant="secondary"
@@ -109,20 +119,20 @@ function StudentProfile() {
             agent.start(async () => setPlan(await generateStudentLearningPlan(firstName)))
           }
         >
-          Generate Personal Learning Plan
+          Создать индивидуальный учебный план
         </Button>
         <Button variant="secondary" onClick={() => setShowHistory((v) => !v)}>
-          View Assessment History
+          История тестов
         </Button>
       </div>
 
       {agent.steps.length ? (
-        <AgentTimeline steps={agent.steps} title="AI agent building personalized material" />
+        <AgentTimeline steps={agent.steps} title="ИИ-агент готовит индивидуальные материалы" />
       ) : null}
 
       {plan && agent.done ? (
         <Card>
-          <SectionTitle title={plan.title} subtitle="Generated by the AI teaching agent" />
+          <SectionTitle title={plan.title} subtitle="Подготовлено ИИ-помощником учителя" />
           <ol className="space-y-2 text-sm">
             {plan.steps.map((s, i) => (
               <li key={s} className="flex gap-3">
@@ -136,7 +146,7 @@ function StudentProfile() {
 
       {showHistory ? (
         <Card>
-          <SectionTitle title="Assessment history" />
+          <SectionTitle title="История тестов" />
           <div className="divide-y divide-border">
             {recentAssessments.map((a) => (
               <div key={a.id} className="flex items-center justify-between py-3 text-sm">
