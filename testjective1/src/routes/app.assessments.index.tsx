@@ -5,6 +5,7 @@ import { AgentTimeline } from "@/components/AgentTimeline";
 import { useAgentRun } from "@/components/useAgentRun";
 import { ASSESSMENT_STEPS, generateAssessment, type QuizQuestion } from "@/services/aiAgent";
 import { recentAssessments } from "@/lib/data";
+import { InformaticsQuizDialog } from "@/components/InformaticsQuizDialog";
 
 export const Route = createFileRoute("/app/assessments/")({
   head: () => ({
@@ -43,6 +44,17 @@ function AssessmentGenerator() {
 
   return (
     <div className="space-y-6">
+      <Card>
+        <SectionTitle
+          title="Тест по информатике"
+          subtitle="Пять вопросов с вариантами ответов. Проверьте свои знания и сразу узнайте результат."
+          action={
+            <InformaticsQuizDialog>
+              <Button type="button">Пройти тест</Button>
+            </InformaticsQuizDialog>
+          }
+        />
+      </Card>
       <SectionTitle
         title="Создать тест"
         subtitle="Вопросы связаны с навыками, поэтому результаты сразу попадают в аналитику."
