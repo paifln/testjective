@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui";
+import { LoginDialog } from "@/components/LoginDialog";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -46,9 +47,7 @@ function Landing() {
           <span className="text-lg font-semibold tracking-tight">EduPilot AI</span>
         </div>
         <nav className="flex items-center gap-2">
-          <Link to="/auth">
-            <Button variant="ghost">Войти</Button>
-          </Link>
+          <LoginDialog variant="ghost" />
           <Link to="/app">
             <Button>Попробовать демо</Button>
           </Link>
@@ -71,9 +70,7 @@ function Landing() {
             <Link to="/app">
               <Button>Попробовать демо</Button>
             </Link>
-            <Link to="/auth">
-              <Button variant="secondary">Войти</Button>
-            </Link>
+            <LoginDialog />
           </div>
         </section>
 
