@@ -60,7 +60,7 @@ function Landing() {
             ИИ-помощник учителя: планирует, оценивает, анализирует и адаптирует.
           </span>
           <h1 className="mx-auto mt-6 max-w-3xl text-5xl font-semibold tracking-tight md:text-6xl">
-            Ваш ИИ-помощник учителя
+            Серикбол Питер ПАРКЕР
           </h1>
           <p className="mx-auto mt-5 max-w-2xl text-lg text-muted-foreground">
             Планируйте уроки, понимайте трудности учеников и автоматически адаптируйте дальнейшее
