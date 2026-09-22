@@ -35,7 +35,7 @@ export function LoginDialog({ variant = "secondary" }: { variant?: "ghost" | "se
         >
           <div className="grid gap-4 sm:grid-cols-2">
             <label className="block min-w-0">
-              <span className="mb-1.5 block text-sm font-medium">Электронная почта</span>
+              <span className="mb-1.5 block text-sm font-medium">held</span>
               <input
                 name="email"
                 type="email"
