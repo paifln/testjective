@@ -2,6 +2,7 @@ import { createFileRoute, Link, Outlet, useRouterState } from "@tanstack/react-r
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { teacher } from "@/lib/data";
+import { InformaticsQuizDialog } from "@/components/InformaticsQuizDialog";
 
 export const Route = createFileRoute("/app")({
   component: AppLayout,
@@ -39,8 +40,9 @@ function AppLayout() {
 
         <nav className="space-y-1">
           {nav.map((item) => {
-            const active = item.exact ? path === item.to : path.startsWith(item.to);
-            return (
+            const active =
+              "exact" in item && item.exact ? path === item.to : path.startsWith(item.to);
+            const link = (
               <Link
                 key={item.to}
                 to={item.to}
@@ -55,6 +57,11 @@ function AppLayout() {
                 <span className="w-4 text-center opacity-70">{item.icon}</span>
                 {item.label}
               </Link>
+            );
+            return item.to === "/app/assessments" ? (
+              <InformaticsQuizDialog key={item.to}>{link}</InformaticsQuizDialog>
+            ) : (
+              link
             );
           })}
         </nav>
